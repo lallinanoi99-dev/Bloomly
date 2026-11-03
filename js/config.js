@@ -9,7 +9,7 @@ window.BLOOMLY_CONFIG = {
       rpc: 'https://rpc.botchain.ai',
       explorer: 'https://scan.botchain.ai',
       currency: { name: 'BOT', symbol: 'BOT', decimals: 18 },
-      contract: '0xAc21f4429EAD840D89525F6bd0f7047Fa8c73Af6' // BloomlyStreak on BOT Chain mainnet
+      contract: '0x3f44875d5876b3f88687AA534cB955d276D1eAb8' // BloomlyStreak on BOT Chain mainnet
     },
     testnet: {
       chainId: 968,

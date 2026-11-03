@@ -4,7 +4,7 @@ A gentle, private health tracker for women. It covers period, water, pregnancy a
 Your health data never leaves your device. Only an anonymous daily self-care check-in goes on **BOT Chain** to keep your streak.
 
 - **Live site:** _add your GitHub Pages / custom domain URL here_
-- **Contract (BOT Chain mainnet, chain ID 677):** [`0xAc21f4429EAD840D89525F6bd0f7047Fa8c73Af6`](https://scan.botchain.ai/address/0xAc21f4429EAD840D89525F6bd0f7047Fa8c73Af6)
+- **Contract (BOT Chain mainnet, chain ID 677):** [`0x3f44875d5876b3f88687AA534cB955d276D1eAb8`](https://scan.botchain.ai/address/0x3f44875d5876b3f88687AA534cB955d276D1eAb8)
 
 > Bloomly gives estimates for information only. It is not medical advice and must not be used as birth control. Talk to a doctor or midwife about any health concern.
 
