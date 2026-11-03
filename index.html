@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Bloomly — private period, water, pregnancy & habit tracker</title>
+  <meta name="description" content="Track your period, water, pregnancy and healthy habits privately on your own device. Only an anonymous daily check-in goes on BOT Chain." />
+  <meta name="theme-color" content="#FCF9F5" />
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/icon-192.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta property="og:title" content="Bloomly — gentle, private health tracking" />
+  <meta property="og:description" content="Period, water, pregnancy and healthy habits in one place. Your health data never leaves your device." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,900;1,9..144,400&family=Inter+Tight:wght@400;500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<!-- =========================================================
+     Illustration sprite (our own flat botanical art)
+     ========================================================= -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <!-- Flower pattern used to fill the giant "bloom" words -->
+    <pattern id="flora" width="140" height="140" patternUnits="userSpaceOnUse">
+      <rect width="140" height="140" fill="#F3B9C8"/>
+      <g stroke="#1E1B2E" stroke-width="1.4">
+        <g transform="translate(34 36)">
+          <ellipse rx="7" ry="16" cy="-12" fill="#C2456B"/>
+          <ellipse rx="7" ry="16" cy="-12" fill="#C2456B" transform="rotate(45)"/>
+          <ellipse rx="7" ry="16" cy="-12" fill="#C2456B" transform="rotate(90)"/>
+          <ellipse rx="7" ry="16" cy="-12" fill="#C2456B" transform="rotate(135)"/>
+          <ellipse rx="7" ry="16" cy="-12" fill="#C2456B" transform="rotate(180)"/>
+          <ellipse rx="7" ry="16" cy="-12" fill="#C2456B" transform="rotate(225)"/>
+          <ellipse rx="7" ry="16" cy="-12" fill="#C2456B" transform="rotate(270)"/>
+          <ellipse rx="7" ry="16" cy="-12" fill="#C2456B" transform="rotate(315)"/>
+          <circle r="7" fill="#FBE3D0"/>
+        </g>
+        <g transform="translate(102 100)">
+          <ellipse rx="9" ry="15" cy="-11" fill="#E4DDF7"/>
+          <ellipse rx="9" ry="15" cy="-11" fill="#E4DDF7" transform="rotate(60)"/>
+          <ellipse rx="9" ry="15" cy="-11" fill="#E4DDF7" transform="rotate(120)"/>
+          <ellipse rx="9" ry="15" cy="-11" fill="#E4DDF7" transform="rotate(180)"/>
+          <ellipse rx="9" ry="15" cy="-11" fill="#E4DDF7" transform="rotate(240)"/>
+          <ellipse rx="9" ry="15" cy="-11" fill="#E4DDF7" transform="rotate(300)"/>
+          <circle r="6" fill="#F2C14E"/>
+        </g>
+        <g transform="translate(108 30)">
+          <circle r="6" cy="-7" fill="#fff"/><circle r="6" cx="7" fill="#fff"/><circle r="6" cy="7" fill="#fff"/><circle r="6" cx="-7" fill="#fff"/>
+          <circle r="4" fill="#C2456B"/>
+        </g>
+        <g transform="translate(30 108)">
+          <circle r="6" cy="-7" fill="#D8F0E3"/><circle r="6" cx="7" fill="#D8F0E3"/><circle r="6" cy="7" fill="#D8F0E3"/><circle r="6" cx="-7" fill="#D8F0E3"/>
+          <circle r="4" fill="#2F9C95"/>
+        </g>
+        <path d="M60 72c8-12 22-12 28-4-10 8-20 8-28 4z" fill="#7FB48F"/>
+        <path d="M70 18c-4 10-2 20 6 24 4-10 2-20-6-24z" fill="#7FB48F"/>
+        <path d="M2 70c10-6 22-2 24 6-10 4-20 2-24-6z" fill="#7FB48F"/>
+      </g>
+      <g fill="#4B1D3F">
+        <path d="M74 112l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/>
+        <path d="M128 64l1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z"/>
+        <circle cx="66" cy="52" r="2"/><circle cx="12" cy="20" r="2"/>
+      </g>
+    </pattern>
+
+    <symbol id="logo" viewBox="0 0 32 32">
+      <g stroke="#1E1B2E" stroke-width="1.2">
+        <path id="lpetal" d="M16 16c-3.6-2.2-5.3-6-3.8-9.4C13 4.8 14.6 3.6 16 3.2c1.4.4 3 1.6 3.8 3.4 1.5 3.4-.2 7.2-3.8 9.4z" fill="#C2456B"/>
+        <use href="#lpetal" transform="rotate(72 16 16)" fill="#E8879F"/>
+        <use href="#lpetal" transform="rotate(144 16 16)"/>
+        <use href="#lpetal" transform="rotate(216 16 16)"/>
+        <use href="#lpetal" transform="rotate(288 16 16)"/>
+        <circle cx="16" cy="16" r="3.6" fill="#FBE3D0"/>
+      </g>
+    </symbol>
+
+    <symbol id="leaf" viewBox="0 0 26 14">
+      <path d="M1 7C7-1 19-1 25 7 19 15 7 15 1 7z" fill="#7FB48F" stroke="#1E1B2E" stroke-width="1.3"/>
+      <path d="M3 7h19" stroke="#1E1B2E" stroke-width="1" fill="none"/>
+    </symbol>
+
+    <symbol id="spark" viewBox="0 0 12 12"><path d="M6 0l1.5 4.5L12 6 7.5 7.5 6 12 4.5 7.5 0 6l4.5-1.5z" fill="#4B1D3F"/></symbol>
+
+    <symbol id="tulip" viewBox="0 0 120 100">
+      <use href="#spark" x="14" y="12" width="10" height="10"/>
+      <use href="#spark" x="96" y="20" width="12" height="12"/>
+      <circle cx="98" cy="62" r="2.5" fill="#4B1D3F"/>
+      <path d="M60 96c0-18-1-34 0-46" stroke="#4E8F6B" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <g stroke="#1E1B2E" stroke-width="1.6">
+        <path d="M59 90c-18-2-26-18-25-32 14 4 22 16 25 32z" fill="#7FB48F"/>
+        <path d="M61 82c16-3 23-15 22-27-13 4-19 14-22 27z" fill="#A9D4B5"/>
+        <path d="M42 26c0 18 8 26 18 26s18-8 18-26l-8 8-4-14-6 12-6-12-4 14z" fill="#C2456B"/>
+        <path d="M52 34c2 8 5 12 8 12" fill="none" stroke-width="1.2"/>
+      </g>
+    </symbol>
+
+    <symbol id="lily" viewBox="0 0 120 100">
+      <g fill="none" stroke="#7FB3D1" stroke-width="2" stroke-linecap="round">
+        <path d="M8 86c14-6 26 6 40 0"/><path d="M70 92c14-6 26 6 40 0"/><path d="M30 96c10-4 18 4 28 0"/>
+      </g>
+      <g stroke="#1E1B2E" stroke-width="1.6">
+        <path d="M14 74c0-12 20-20 46-20s46 8 46 20-20 18-46 18c-10 0-18-1-25-3l12-11-20 8C18 83 14 79 14 74z" fill="#7FB48F"/>
+        <g transform="translate(60 62)" fill="#fff">
+          <path d="M0 0c-8-10-6-26 0-34 6 8 8 24 0 34z" transform="rotate(-62)"/>
+          <path d="M0 0c-8-10-6-26 0-34 6 8 8 24 0 34z" transform="rotate(62)"/>
+          <path d="M0 0c-8-10-6-26 0-34 6 8 8 24 0 34z" transform="rotate(-32)" fill="#F8D7DA"/>
+          <path d="M0 0c-8-10-6-26 0-34 6 8 8 24 0 34z" transform="rotate(32)" fill="#F8D7DA"/>
+          <path d="M0 0c-8-10-6-26 0-34 6 8 8 24 0 34z" fill="#fff"/>
+          <circle cy="-6" r="5" fill="#F2C14E"/>
+        </g>
+      </g>
+      <use href="#spark" x="98" y="10" width="10" height="10"/>
+      <circle cx="18" cy="22" r="2.5" fill="#4B1D3F"/>
+    </symbol>
+
+    <symbol id="seed" viewBox="0 0 120 100">
+      <path d="M92 14a14 14 0 1 0 10 24 11 11 0 1 1-10-24z" fill="#F2C14E" stroke="#1E1B2E" stroke-width="1.4"/>
+      <use href="#spark" x="18" y="14" width="10" height="10"/>
+      <circle cx="40" cy="30" r="2" fill="#4B1D3F"/>
+      <g stroke="#1E1B2E" stroke-width="1.6">
+        <path d="M6 96c8-20 30-28 54-28s46 8 54 28z" fill="#E2C2A2"/>
+        <ellipse cx="60" cy="80" rx="12" ry="8" fill="#9C6B44" transform="rotate(-14 60 80)"/>
+        <path d="M60 74c0-12 0-22 2-32" fill="none" stroke="#4E8F6B" stroke-width="3.4"/>
+        <path d="M62 50c-14 0-22-8-24-18 12-2 22 4 24 18z" fill="#7FB48F"/>
+        <path d="M62 44c4-14 14-20 26-18-2 12-12 18-26 18z" fill="#A9D4B5"/>
+      </g>
+    </symbol>
+
+    <symbol id="kaleido" viewBox="0 0 120 120">
+      <g transform="translate(60 60)" stroke="#1E1B2E" stroke-width="1.3">
+        <g fill="#D8F0E3">
+          <ellipse rx="7" ry="22" cy="-30"/><ellipse rx="7" ry="22" cy="-30" transform="rotate(60)"/><ellipse rx="7" ry="22" cy="-30" transform="rotate(120)"/>
+          <ellipse rx="7" ry="22" cy="-30" transform="rotate(180)"/><ellipse rx="7" ry="22" cy="-30" transform="rotate(240)"/><ellipse rx="7" ry="22" cy="-30" transform="rotate(300)"/>
+        </g>
+        <g fill="#E4DDF7">
+          <ellipse rx="7" ry="22" cy="-30" transform="rotate(30)"/><ellipse rx="7" ry="22" cy="-30" transform="rotate(90)"/><ellipse rx="7" ry="22" cy="-30" transform="rotate(150)"/>
+          <ellipse rx="7" ry="22" cy="-30" transform="rotate(210)"/><ellipse rx="7" ry="22" cy="-30" transform="rotate(270)"/><ellipse rx="7" ry="22" cy="-30" transform="rotate(330)"/>
+        </g>
+        <g fill="#FBE3D0">
+          <ellipse rx="8" ry="13" cy="-15"/><ellipse rx="8" ry="13" cy="-15" transform="rotate(45)"/><ellipse rx="8" ry="13" cy="-15" transform="rotate(90)"/><ellipse rx="8" ry="13" cy="-15" transform="rotate(135)"/>
+          <ellipse rx="8" ry="13" cy="-15" transform="rotate(180)"/><ellipse rx="8" ry="13" cy="-15" transform="rotate(225)"/><ellipse rx="8" ry="13" cy="-15" transform="rotate(270)"/><ellipse rx="8" ry="13" cy="-15" transform="rotate(315)"/>
+        </g>
+        <circle r="9" fill="#2F9C95"/><circle r="4" fill="#FCF9F5"/>
+      </g>
+    </symbol>
+
+    <symbol id="cosmic" viewBox="0 0 320 300">
+      <ellipse cx="160" cy="150" rx="150" ry="46" fill="none" stroke="#4B1D3F" stroke-width="1.5" stroke-dasharray="4 7" transform="rotate(-18 160 150)"/>
+      <ellipse cx="160" cy="150" rx="118" ry="118" fill="#F6F0E8"/>
+      <use href="#kaleido" x="60" y="50" width="200" height="200"/>
+      <circle cx="40" cy="96" r="16" fill="#F8D7DA" stroke="#1E1B2E" stroke-width="1.5"/>
+      <ellipse cx="40" cy="96" rx="26" ry="6" fill="none" stroke="#1E1B2E" stroke-width="1.5" transform="rotate(-20 40 96)"/>
+      <circle cx="286" cy="214" r="10" fill="#D6EAF8" stroke="#1E1B2E" stroke-width="1.5"/>
+      <use href="#spark" x="262" y="40" width="20" height="20"/>
+      <use href="#spark" x="30" y="226" width="14" height="14"/>
+      <use href="#spark" x="210" y="270" width="12" height="12"/>
+      <circle cx="96" cy="22" r="3" fill="#4B1D3F"/><circle cx="300" cy="120" r="3" fill="#4B1D3F"/><circle cx="12" cy="170" r="2.5" fill="#4B1D3F"/>
+    </symbol>
+
+    <symbol id="vine" viewBox="0 0 440 280">
+      <path d="M8 230C70 150 120 270 190 170S300 30 360 120 330 260 250 220 120 60 70 120s80 130 190-10S400 70 432 30" fill="none" stroke="#4E8F6B" stroke-width="3.5" stroke-linecap="round"/>
+      <g stroke="#1E1B2E" stroke-width="2">
+        <g transform="translate(36 70) rotate(-12)"><rect width="74" height="74" rx="18" fill="#F8D7DA"/><text x="37" y="49" font-size="32" text-anchor="middle" stroke="none">🌸</text></g>
+        <g transform="translate(150 24) rotate(8)"><rect width="74" height="74" rx="18" fill="#D6EAF8"/><text x="37" y="49" font-size="32" text-anchor="middle" stroke="none">💧</text></g>
+        <g transform="translate(262 52) rotate(-6)"><rect width="74" height="74" rx="18" fill="#E4DDF7"/><text x="37" y="49" font-size="32" text-anchor="middle" stroke="none">🤰</text></g>
+        <g transform="translate(110 160) rotate(10)"><rect width="74" height="74" rx="18" fill="#D8F0E3"/><text x="37" y="49" font-size="32" text-anchor="middle" stroke="none">✅</text></g>
+        <g transform="translate(240 170) rotate(-10)"><rect width="74" height="74" rx="18" fill="#FBE3D0"/><text x="37" y="49" font-size="32" text-anchor="middle" stroke="none">👀</text></g>
+      </g>
+      <path d="M40 40c60 30 40 110 120 120s110-40 150-10 20 110 90 100" fill="none" stroke="#4E8F6B" stroke-width="3.5" stroke-linecap="round"/>
+      <use href="#leaf" x="60" y="140" width="30" height="16" transform="rotate(-30 75 148)"/>
+      <use href="#leaf" x="124" y="118" width="30" height="16" transform="rotate(20 139 126)"/>
+      <use href="#leaf" x="220" y="138" width="30" height="16" transform="rotate(-40 235 146)"/>
+      <use href="#leaf" x="350" y="92" width="30" height="16" transform="rotate(50 365 100)"/>
+      <use href="#leaf" x="380" y="230" width="30" height="16" transform="rotate(-20 395 238)"/>
+      <use href="#leaf" x="20" y="200" width="30" height="16" transform="rotate(30 35 208)"/>
+      <use href="#leaf" x="300" y="20" width="30" height="16" transform="rotate(-10 315 28)"/>
+      <use href="#spark" x="410" y="140" width="14" height="14"/>
+      <use href="#spark" x="16" y="16" width="12" height="12"/>
+    </symbol>
+
+    <symbol id="step-log" viewBox="0 0 160 110">
+      <g stroke="#1E1B2E" stroke-width="1.6">
+        <rect x="34" y="6" width="92" height="98" rx="14" fill="#fff" transform="rotate(-4 80 55)"/>
+        <rect x="46" y="22" width="40" height="14" rx="7" fill="#F8D7DA"/>
+        <rect x="90" y="22" width="26" height="14" rx="7" fill="#D6EAF8"/>
+        <rect x="46" y="42" width="30" height="14" rx="7" fill="#D8F0E3"/>
+        <rect x="80" y="42" width="34" height="14" rx="7" fill="#C2456B"/>
+        <rect x="46" y="62" width="52" height="14" rx="7" fill="#E4DDF7"/>
+        <rect x="46" y="84" width="68" height="10" rx="5" fill="#C2456B"/>
+      </g>
+      <use href="#leaf" x="118" y="70" width="34" height="18" transform="rotate(-40 135 79)"/>
+      <use href="#spark" x="14" y="20" width="12" height="12"/>
+    </symbol>
+
+    <symbol id="step-ring" viewBox="0 0 160 110">
+      <circle cx="58" cy="55" r="38" fill="#fff" stroke="#1E1B2E" stroke-width="1.6"/>
+      <circle cx="58" cy="55" r="28" fill="none" stroke="#EDE6DD" stroke-width="10"/>
+      <circle cx="58" cy="55" r="28" fill="none" stroke="#C2456B" stroke-width="10" stroke-dasharray="30 200" transform="rotate(-90 58 55)"/>
+      <circle cx="58" cy="55" r="28" fill="none" stroke="#2F9C95" stroke-width="10" stroke-dasharray="0 70 34 200" transform="rotate(-90 58 55)"/>
+      <circle cx="58" cy="55" r="28" fill="none" stroke="#B9A9EC" stroke-width="10" stroke-dasharray="0 108 60 200" transform="rotate(-90 58 55)"/>
+      <g stroke="#1E1B2E" stroke-width="1.4">
+        <rect x="108" y="56" width="10" height="34" rx="3" fill="#F8D7DA"/>
+        <rect x="122" y="38" width="10" height="52" rx="3" fill="#C2456B"/>
+        <rect x="136" y="48" width="10" height="42" rx="3" fill="#F8D7DA"/>
+      </g>
+      <use href="#spark" x="128" y="12" width="14" height="14"/>
+    </symbol>
+
+    <symbol id="step-chain" viewBox="0 0 160 110">
+      <g fill="none" stroke="#1E1B2E" stroke-width="7" stroke-linecap="round">
+        <rect x="26" y="52" width="56" height="30" rx="15" stroke="#4B1D3F"/>
+        <rect x="70" y="52" width="56" height="30" rx="15" stroke="#C2456B"/>
+      </g>
+      <path d="M98 52c0-16 0-26 2-34" stroke="#4E8F6B" stroke-width="3" fill="none"/>
+      <use href="#leaf" x="74" y="28" width="26" height="14" transform="rotate(-30 87 35)"/>
+      <use href="#logo" x="86" y="0" width="28" height="28"/>
+      <circle cx="132" cy="24" r="12" fill="#D8F0E3" stroke="#1E1B2E" stroke-width="1.4"/>
+      <path d="M126 24l4 4 8-8" fill="none" stroke="#1F6E58" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <use href="#spark" x="12" y="22" width="12" height="12"/>
+    </symbol>
+
+    <symbol id="i-lock" viewBox="0 0 44 44"><g fill="none" stroke="#1E1B2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="19" width="26" height="20" rx="5" fill="#fff"/><path d="M15 19v-5a7 7 0 0 1 14 0v5"/><circle cx="22" cy="28" r="2.5" fill="#C2456B"/><path d="M22 31v3"/></g></symbol>
+    <symbol id="i-life" viewBox="0 0 44 44"><g fill="none" stroke="#1E1B2E" stroke-width="2" stroke-linecap="round"><rect x="12" y="4" width="20" height="36" rx="5" fill="#fff"/><path d="M19 35h6"/><path d="M22 13c-4 4-4 9 0 13 4-4 4-9 0-13z" fill="#7FB3D1"/></g></symbol>
+    <symbol id="i-anon" viewBox="0 0 44 44"><g fill="none" stroke="#1E1B2E" stroke-width="2" stroke-linecap="round"><rect x="5" y="16" width="20" height="13" rx="6.5"/><rect x="19" y="16" width="20" height="13" rx="6.5"/><circle cx="34" cy="9" r="6" fill="#D8F0E3"/><path d="M31 9l2 2 4-4"/></g></symbol>
+    <symbol id="i-honest" viewBox="0 0 44 44"><g fill="none" stroke="#1E1B2E" stroke-width="2" stroke-linecap="round"><circle cx="22" cy="22" r="16" fill="#fff"/><path d="M22 10v4M22 30v4M10 22h4M30 22h4"/><path d="M17 27l3-8 8-3-3 8z" fill="#C2456B"/></g></symbol>
+  </defs>
+</svg>
+
+<!-- =========================================================
+     Navbar
+     ========================================================= -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="logo" aria-label="Bloomly home"><svg aria-hidden="true"><use href="#logo"/></svg>bloomly</a>
+
+    <nav class="nav-links" aria-label="Main">
+      <div class="dd" id="features-dd">
+        <button class="dd-btn" aria-expanded="false" aria-controls="features-menu">Features
+          <svg viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        </button>
+        <div class="dd-menu" id="features-menu">
+          <a class="dd-item" href="#stages" data-stage-link="cycle"><span class="ico" style="background:var(--rose)">🌸</span><span><b>Period & cycle</b><small>Ring, predictions, symptoms</small></span></a>
+          <a class="dd-item" href="#stages" data-stage-link="wellness"><span class="ico" style="background:var(--sky)">💧</span><span><b>Water</b><small>Glasses toward your daily goal</small></span></a>
+          <a class="dd-item" href="#stages" data-stage-link="pregnancy"><span class="ico" style="background:var(--lavender)">🤰</span><span><b>Pregnancy</b><small>Week by week, due date, kicks</small></span></a>
+          <a class="dd-item" href="#stages" data-stage-link="wellness"><span class="ico" style="background:var(--mint)">✨</span><span><b>Healthy habits</b><small>Sleep, steps, vitamins, calm</small></span></a>
+        </div>
+      </div>
+      <a href="#why">Privacy</a>
+      <a href="#how">How it works</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+
+    <div class="nav-right">
+      <button class="nav-wallet" data-action="connect-wallet" data-wallet-label>Connect wallet</button>
+      <button class="btn btn-primary btn-sm" data-open-app>Start tracking</button>
+      <button class="nav-burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="mnav"><span></span></button>
+    </div>
+  </div>
+
+  <div class="mnav" id="mnav">
+    <a href="#approach">Features</a>
+    <a href="#stages" class="mnav-sub" data-stage-link="cycle">🌸 Period & cycle</a>
+    <a href="#stages" class="mnav-sub" data-stage-link="wellness">💧 Water</a>
+    <a href="#stages" class="mnav-sub" data-stage-link="pregnancy">🤰 Pregnancy</a>
+    <a href="#stages" class="mnav-sub" data-stage-link="wellness">✨ Healthy habits</a>
+    <a href="#why">Privacy</a>
+    <a href="#how">How it works</a>
+    <a href="#faq">FAQ</a>
+    <div class="mnav-actions">
+      <button class="btn btn-primary" data-open-app>Start tracking</button>
+      <button class="btn btn-secondary" data-action="connect-wallet" data-wallet-label>Connect wallet</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- =========================================================
+       1 · Hero
+       ========================================================= -->
+  <section class="hero">
+    <div class="wrap">
+      <a href="#stages" class="new-chip" data-stage-link="pregnancy"><b>New</b>Pregnancy week by week →</a>
+      <h1 class="h1">Your body has a rhythm. <em>Bloomly helps you hear it.</em></h1>
+      <p class="lead">Track your period, water, pregnancy and healthy habits — privately, on your own device.</p>
+      <div class="hero-ctas">
+        <button class="btn btn-primary" data-open-app>Start tracking</button>
+        <a class="btn btn-secondary" href="#how">See how it works</a>
+      </div>
+    </div>
+
+    <div class="marquee" aria-label="What you can track">
+      <div class="marquee-track">
+        <span class="tchip">🌸 Period</span><span class="tchip">💧 Water</span><span class="tchip">🤰 Pregnancy</span><span class="tchip">😴 Sleep</span>
+        <span class="tchip">🚶 Steps</span><span class="tchip">💊 Vitamins</span><span class="tchip">🧘 Yoga</span><span class="tchip">😊 Mood</span>
+        <span class="tchip">🌿 Fertile window</span><span class="tchip">👶 Kicks</span><span class="tchip">🥗 Fruit & veg</span><span class="tchip">🧠 Mindful minute</span>
+        <span class="tchip" aria-hidden="true">🌸 Period</span><span class="tchip" aria-hidden="true">💧 Water</span><span class="tchip" aria-hidden="true">🤰 Pregnancy</span><span class="tchip" aria-hidden="true">😴 Sleep</span>
+        <span class="tchip" aria-hidden="true">🚶 Steps</span><span class="tchip" aria-hidden="true">💊 Vitamins</span><span class="tchip" aria-hidden="true">🧘 Yoga</span><span class="tchip" aria-hidden="true">😊 Mood</span>
+        <span class="tchip" aria-hidden="true">🌿 Fertile window</span><span class="tchip" aria-hidden="true">👶 Kicks</span><span class="tchip" aria-hidden="true">🥗 Fruit & veg</span><span class="tchip" aria-hidden="true">🧠 Mindful minute</span>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div class="bloomword" aria-hidden="true">
+        <svg viewBox="0 0 1200 290">
+          <text x="600" y="250" text-anchor="middle" textLength="1160" lengthAdjust="spacingAndGlyphs"
+                font-family="Fraunces, Georgia, serif" font-weight="900" font-size="300"
+                fill="url(#flora)" stroke="#1E1B2E" stroke-width="3" paint-order="stroke">bloom</text>
+        </svg>
+        <span class="sticker" style="left:6%;top:4%;--rot:-6deg">100% on your device</span>
+        <span class="sticker" style="left:42%;top:-2%;--rot:4deg">0 servers</span>
+        <span class="sticker" style="right:4%;top:10%;--rot:-3deg">1 tap check-in</span>
+      </div>
+
+      <div class="frame hero-frame">
+        <div class="frame-bar">
+          <div class="frame-dots"><i></i><i></i><i></i></div>
+          <div class="seg" id="hero-seg" role="group" aria-label="App screen">
+            <button aria-pressed="true" data-slide="0">Today</button>
+            <button aria-pressed="false" data-slide="1">Calendar</button>
+            <button aria-pressed="false" data-slide="2">Insights</button>
+          </div>
+          <span class="tiny muted frame-note" style="font-family:var(--mono)">PRIVATE · ON YOUR DEVICE</span>
+        </div>
+        <div class="frame-body"><div class="dstage" id="hero-desk" aria-label="Bloomly app preview" role="img"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       2 · The reality
+       ========================================================= -->
+  <section class="section reality" id="reality">
+    <div class="wrap">
+      <svg class="vine reveal" role="img" aria-label="Tangled vines wrapped around five different apps"><use href="#vine"/></svg>
+      <span class="label">The reality</span>
+      <h2 class="h2">Women's health is daily. <em>But tracking it is scattered across five apps.</em></h2>
+      <div class="reality-copy reveal">
+        <p>A period app. A water app. A pregnancy app. A habit app. A notes app for everything else.</p>
+        <p>Each one wants an account, and each one keeps your most personal data on someone else's server. You end up wondering who else is reading it.</p>
+      </div>
+      <div class="app-pile reveal" aria-hidden="true"><span>period app</span><span>water app</span><span>pregnancy app</span><span>habit app</span><span>"who sees this?"</span></div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       3 · Our approach
+       ========================================================= -->
+  <section class="section" id="approach" style="padding-top:0">
+    <div class="wrap">
+      <div class="block reveal">
+        <div class="block-grid">
+          <div>
+            <span class="label">Our approach</span>
+            <h2 class="h2">Everything in one place. <em>Private by design.</em> No compromises.</h2>
+            <p class="lead" style="color:rgba(252,249,245,.75);margin-top:18px">Four gentle trackers that work together, so your cycle, water, pregnancy and habits finally make sense side by side.</p>
+          </div>
+          <div class="feat-grid">
+            <article class="feat rose"><svg aria-hidden="true" viewBox="0 0 120 100"><use href="#tulip"/></svg><h3>Cycle & period</h3><p>A cycle ring, gentle predictions and quick symptom and mood logging.</p></article>
+            <article class="feat sky"><svg aria-hidden="true" viewBox="0 0 120 100"><use href="#lily"/></svg><h3>Hydration</h3><p>Tap a glass, watch it fill and see your day add up toward your goal.</p></article>
+            <article class="feat lav"><svg aria-hidden="true" viewBox="0 0 120 100"><use href="#seed"/></svg><h3>Pregnancy</h3><p>Week by week notes, a due date countdown and a kick counter.</p></article>
+            <article class="feat mint"><svg aria-hidden="true" viewBox="0 0 120 120"><use href="#kaleido"/></svg><h3>Healthy habits</h3><p>Sleep, steps, vitamins and a mindful minute, ticked off each day.</p></article>
+          </div>
+        </div>
+        <div class="block-foot">
+          <p>Your data stays on your device.</p>
+          <button class="btn btn-light" data-open-app>Explore the app →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       4 · Made for every stage
+       ========================================================= -->
+  <section class="section" id="stages" style="padding-top:0">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="label">Made for every stage</span>
+        <h2 class="h2">One app, <em>every chapter.</em></h2>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Stages">
+        <button class="tab" role="tab" id="tab-cycle" aria-selected="true" aria-controls="stage-panel" data-stage="cycle">Cycle</button>
+        <button class="tab" role="tab" id="tab-ttc" aria-selected="false" aria-controls="stage-panel" data-stage="ttc">Trying to conceive</button>
+        <button class="tab" role="tab" id="tab-pregnancy" aria-selected="false" aria-controls="stage-panel" data-stage="pregnancy">Pregnancy</button>
+        <button class="tab" role="tab" id="tab-wellness" aria-selected="false" aria-controls="stage-panel" data-stage="wellness">Wellness</button>
+      </div>
+      <div class="stage" id="stage-panel" role="tabpanel" aria-labelledby="tab-cycle">
+        <div class="stage-copy" id="stage-copy"></div>
+        <div class="frame stage-frame">
+          <div class="frame-bar">
+            <div class="frame-dots"><i></i><i></i><i></i></div>
+            <div class="seg" role="group" aria-label="Screen">
+              <button aria-pressed="true" data-view="today">Today</button>
+              <button aria-pressed="false" data-view="calendar">Calendar</button>
+            </div>
+          </div>
+          <div class="frame-body" id="stage-shot"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       5 · How it works
+       ========================================================= -->
+  <section class="section" id="how" style="background:var(--paper)">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">How it works</span>
+        <h2 class="h2">A few taps a day. <em>That's it.</em></h2>
+      </div>
+      <div class="steps">
+        <article class="step reveal"><span class="step-num">01 — Log</span><svg aria-hidden="true" viewBox="0 0 160 110"><use href="#step-log"/></svg><h3>Log</h3><p>Tap chips for flow, symptoms and mood, add a glass of water, tick a habit. Takes seconds.</p></article>
+        <article class="step reveal"><span class="step-num">02 — Understand</span><svg aria-hidden="true" viewBox="0 0 160 110"><use href="#step-ring"/></svg><h3>Understand</h3><p>Your cycle ring, calendar and insights show patterns. Everything is worked out in your browser.</p></article>
+        <article class="step reveal"><span class="step-num">03 — Check in</span><svg aria-hidden="true" viewBox="0 0 160 110"><use href="#step-chain"/></svg><h3>Check in</h3><p>Keep a self-care streak on BOT Chain. It's an anonymous "I took care of myself today", nothing more.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       6 · Why Bloomly
+       ========================================================= -->
+  <section class="section" id="why">
+    <div class="wrap">
+      <div class="why-head">
+        <div class="section-head" style="margin:0">
+          <span class="label">Why Bloomly?</span>
+          <h2 class="h2">Gentle tracking, <em>real privacy.</em></h2>
+          <p class="lead">No accounts, no servers and no tracking scripts. The only thing that leaves your device is a check-in that says nothing about your health.</p>
+        </div>
+        <svg viewBox="0 0 320 300" class="reveal" aria-hidden="true"><use href="#cosmic"/></svg>
+      </div>
+      <div class="why-grid">
+        <article class="why rose reveal"><svg aria-hidden="true"><use href="#i-lock"/></svg><p><b>Private by design.</b>Saved only in your browser. No server, no account, no sign-up.</p></article>
+        <article class="why sky reveal"><svg aria-hidden="true"><use href="#i-life"/></svg><p><b>Built for real life.</b>Works offline, logs in a few taps and exports a backup file.</p></article>
+        <article class="why mint reveal"><svg aria-hidden="true"><use href="#i-anon"/></svg><p><b>Nothing personal on-chain.</b>Not dates, not symptoms, not even hashes. Just an anonymous check-in.</p></article>
+        <article class="why peach reveal"><svg aria-hidden="true"><use href="#i-honest"/></svg><p><b>Honest estimates.</b>Predictions are labelled as estimates, and we tell you when they're less certain.</p></article>
+      </div>
+      <div class="stats">
+        <div class="stat"><b id="stat-members">—</b><span>Members on BOT Chain</span></div>
+        <div class="stat"><b id="stat-checkins">—</b><span>Total self-care check-ins</span></div>
+        <div class="stat note"><span class="label">Live from the contract</span><p id="stat-note">These numbers are read directly from the Bloomly contract on BOT Chain. No made-up figures.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       7 · FAQ + closing
+       ========================================================= -->
+  <section class="section" id="faq" style="padding-bottom:40px">
+    <div class="wrap faq-wrap">
+      <div class="section-head" style="margin:0">
+        <span class="label">FAQ</span>
+        <h2 class="h2">Questions, <em>answered.</em></h2>
+      </div>
+      <div class="faq">
+        <details><summary>Is my data private?</summary><p>Yes. Your logs are saved only in this browser on your device. Bloomly has no server, no accounts and no analytics, so your data is never sent anywhere. Anyone who can use your browser could open the app, so keep your device locked.</p></details>
+        <details><summary>What goes on BOT Chain?</summary><p>Only a generic daily check-in from your wallet address. The contract stores your streak count and the day number of your last check-in. No dates, symptoms, pregnancy details or hashes of them are ever sent.</p></details>
+        <details><summary>Can I use it as birth control?</summary><p>No. Bloomly gives estimates for information only. It is not medical advice and must not be used as birth control. Talk to a doctor or midwife about contraception.</p></details>
+        <details><summary>How are predictions made?</summary><p>Bloomly averages up to your last 6 logged cycles (28 days until you've logged at least 2). Your next period is your last start plus that length. Ovulation is estimated 14 days before, and the fertile window runs from 5 days before to 1 day after. If your cycles vary by more than 7 days, we'll tell you predictions are less certain.</p></details>
+        <details><summary>What if I clear my browser or change phones?</summary><p>Your logs live only in this browser, so clearing its data removes them. Export a backup from the Me tab now and then, and import it on any device to carry on where you left off.</p></details>
+        <details><summary>Do I need a wallet?</summary><p>Only for the self-care streak. All four trackers work without a wallet. If you'd like a streak, connect MetaMask and Bloomly will switch it to BOT Chain for you.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing">
+    <div class="wrap">
+      <div class="bloomword reveal" aria-hidden="true">
+        <svg viewBox="0 0 1200 250">
+          <text x="600" y="200" text-anchor="middle" textLength="1140" lengthAdjust="spacingAndGlyphs"
+                font-family="Fraunces, Georgia, serif" font-weight="900" font-size="230"
+                fill="url(#flora)" stroke="#1E1B2E" stroke-width="3" paint-order="stroke">bloom today</text>
+        </svg>
+      </div>
+      <h2 class="h2" style="margin-top:8px">Start tracking today. <em>Bloom at your own pace.</em></h2>
+      <div class="hero-ctas">
+        <button class="btn btn-primary" data-open-app>Start tracking</button>
+        <button class="btn btn-secondary" data-action="connect-wallet" data-wallet-label>Connect wallet</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- =========================================================
+     Footer
+     ========================================================= -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#top" class="logo"><svg aria-hidden="true"><use href="#logo"/></svg>bloomly</a>
+        <p>A gentle, private health tracker for women. Period, water, pregnancy and healthy habits in one place.</p>
+      </div>
+      <div>
+        <h4>Trackers</h4>
+        <ul>
+          <li><button data-open-app="cycle">Period & cycle</button></li>
+          <li><button data-open-app="cycle">Water</button></li>
+          <li><button data-open-app="pregnancy">Pregnancy</button></li>
+          <li><button data-open-app="habits">Healthy habits</button></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Learn</h4>
+        <ul>
+          <li><a href="#why">Privacy</a></li>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="https://github.com/" target="_blank" rel="noopener" id="repo-link">Source code ↗</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>BOT Chain</h4>
+        <ul>
+          <li><a href="https://botchain.ai" target="_blank" rel="noopener">botchain.ai ↗</a></li>
+          <li><a href="https://scan.botchain.ai" target="_blank" rel="noopener" data-explorer-link>View on explorer ↗</a></li>
+          <li><button data-action="connect-wallet" data-wallet-label>Connect wallet</button></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chain-row">
+      <a class="chain-logo" href="https://botchain.ai" target="_blank" rel="noopener" aria-label="Built on BOT Chain — visit botchain.ai">
+        <img src="https://www.botchain.ai/icons/icon_title_logo.png" alt="BOT Chain" style="width:auto;height:24px;border-radius:0" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'BOT Chain'}))" />
+        <span>Built on BOT Chain</span>
+      </a>
+      <div class="chain-links">
+        <a href="https://scan.botchain.ai" target="_blank" rel="noopener" data-explorer-link>View contract on explorer ↗</a>
+        <span class="contract-addr" id="contract-addr">Contract: not deployed yet</span>
+      </div>
+    </div>
+
+    <p class="disclaimer"><b>Medical disclaimer.</b> Bloomly gives estimates for information only. It is not medical advice and must not be used as birth control. Talk to a doctor or midwife about any health concern.</p>
+    <p class="copyright">© 2026 Bloomly. No cookies, no analytics, no accounts.</p>
+  </div>
+</footer>
+
+<!-- =========================================================
+     The tracker app (full screen on phones, phone column on desktop)
+     ========================================================= -->
+<div class="app-overlay" id="app" aria-hidden="true">
+  <div class="app-art" aria-hidden="true">
+    <svg class="a1" viewBox="0 0 440 280"><use href="#vine"/></svg>
+    <svg class="a2" viewBox="0 0 440 280"><use href="#vine"/></svg>
+  </div>
+  <button class="btn btn-secondary btn-sm app-exit-desktop" data-action="close-app">← Back to site</button>
+  <div class="app-panel" role="dialog" aria-modal="true" aria-label="Bloomly tracker">
+    <div id="app-view" style="display:flex;flex-direction:column;height:100%"></div>
+    <div class="sheet-root" id="sheet-root">
+      <div class="sheet-back" data-action="close-sheet"></div>
+      <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+        <div class="sheet-grip"></div>
+        <div class="sheet-head"><h3 id="sheet-title"></h3><button class="icon-btn" data-action="close-sheet" aria-label="Close">✕</button></div>
+        <div class="sheet-body" id="sheet-body"></div>
+        <div class="sheet-foot" id="sheet-foot"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<canvas id="petals" aria-hidden="true"></canvas>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.4/ethers.umd.min.js" defer></script>
+<script src="js/config.js" defer></script>
+<script src="js/core.js" defer></script>
+<script src="js/chain.js" defer></script>
+<script src="js/app.js" defer></script>
+<script src="js/site.js" defer></script>
+</body>
+</html>
